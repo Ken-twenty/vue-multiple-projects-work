@@ -6,6 +6,7 @@
     "serve": "node config/serve",
     "build": "node config/build",
     "lint": "node config/lint",
+    "lint:all": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit"
   },
   "dependencies": {
