@@ -1,6 +1,7 @@
 const { projects } = require('./common');
 const inquirer = require('inquirer');
 const { exec } = require('child_process');
+const chalk = require('chalk');
 
 inquirer.prompt([
     {
@@ -15,13 +16,14 @@ inquirer.prompt([
     const ServeProcess = exec('vue-cli-service serve');
 
     ServeProcess.stdout.on('data', data => {
-        console.log(data);
+      console.log(chalk.green(data));
     })
     ServeProcess.stderr.on('data', data => {
-        console.log(data);
+      console.clear();
+      console.log(data);
     });
     ServeProcess.on('error', err => {
-        console.log(err);
+      console.log(err);
     })
 });
 
