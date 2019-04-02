@@ -22,7 +22,7 @@ inquirer.prompt([
   // 应用反馈
   LintProcess.stdout.on('data', (data) => {
 
-    if (String(data).indexOf('error') !== -1) {
+    if (String(data).indexOf('error') !== -1 && String(data).indexOf('No lint errors') === -1) {
 
       console.log(chalk.red(data));
 
