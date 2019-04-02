@@ -11,19 +11,18 @@ inquirer.prompt([
         choices: projects
     }
 ]).then(res => {
-    console.log(res.project);
     process.env.PROJECT = res.project;
     const ServeProcess = exec('vue-cli-service serve');
 
     ServeProcess.stdout.on('data', data => {
       console.log(chalk.green(data));
-    })
+    });
     ServeProcess.stderr.on('data', data => {
       console.clear();
       console.log(data);
     });
     ServeProcess.on('error', err => {
       console.log(err);
-    })
+    });
 });
 
