@@ -8,7 +8,7 @@ module.exports = {
 
     config.context = path.resolve(__dirname, `src/projects/${process.env.PROJECT}`);
     config.entry = path.resolve(__dirname, `src/projects/${process.env.PROJECT}/main.js`);
-    config.alias = {
+    config.resolve.alias = {
       '@scripts': 'src/assets/scripts',
       '@styles': 'src/assets/styles',
     };
