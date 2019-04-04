@@ -12,12 +12,12 @@
 //加上系统名称
 @prefixuds: e("@{prefix}uds");
 
-.toBuildClass(@themeName, @layoutBackgroundColor, @siderBackgroundColor) {
+.toBuildClass(@themeName, @layoutBackgroundColor, @sideBackgroundColor) {
   .@{prefixuds}-theme-@{themeName} {
     background-color: @layoutBackgroundColor;
 
     .@{prefixuds}-sider{
-      background-color: @siderBackgroundColor;
+      background-color: @sideBackgroundColor;
     }
 
     .@{prefixuds}-header-bar{
@@ -31,7 +31,7 @@
   .toBuildClass(
     extract(@themes, @i),
     extract(@layoutBackgroundColors, @i), 
-    extract(@siderBackgroundColors, @i)
+    extract(@sideBackgroundColors, @i)
   );
 
   .themeLoop(@i + 1);
