@@ -4,11 +4,17 @@ const CurrentProject = process.env.PROJECT;
 module.exports = {
   outputDir: `dist/${CurrentProject}`,
 
+  pages: {
+    [CurrentProject]: {
+      entry: path.resolve(__dirname, `src/projects/${CurrentProject}/main.js`),
+      template: path.resolve(__dirname, `src/projects/${CurrentProject}/index.html`),
+      filename: 'index.html',
+    },
+  },
+
   /* eslint no-param-reassign: 'off' */
   configureWebpack(config) {
 
-    config.context = path.resolve(__dirname, `src/projects/${CurrentProject}`);
-    config.entry = path.resolve(__dirname, `src/projects/${CurrentProject}/main.js`);
     config.resolve.alias = {
       '@images': path.resolve(__dirname, 'src/common/assets/images'),
       '@scripts': path.resolve(__dirname, 'src/common/assets/scripts'),
