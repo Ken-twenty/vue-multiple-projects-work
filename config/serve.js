@@ -1,5 +1,5 @@
 const {
-  projects,
+  Projects,
 } = require('./common');
 const inquirer = require('inquirer');
 const {
@@ -12,12 +12,34 @@ inquirer.prompt([
     type: 'list',
     name: 'project',
     message: 'Select a project to serve on development: ',
-    choices: projects,
+    choices: Projects,
   },
 ]).then((res) => {
 
-  process.env.PROJECT = res.project;
-  const ServeProcess = exec('vue-cli-service serve');
+  let ServeProcess;
+  if (res.project === 'euht_uds') {
+
+    inquirer.prompt([
+      {
+        type: 'checkbox',
+        name: 'projects',
+        message: 'euht_uds is the entry page, select several children projects which you wanner wrap: ',
+        choices: Projects.slice(0, -1),
+      }
+    ]).then((res) => {
+
+      // Windows 与 Linux 文件夹均不能包含 '/'，所以可以安全地作为分隔符使用
+      process.env.PROJECT = res.project.join('///');
+      ServeProcess = exec('vue-cli-service serve');
+
+    });
+
+  } else {
+
+    process.env.PROJECT = res.project;
+    ServeProcess = exec('vue-cli-service serve');
+
+  }
 
   // 应用反馈
   ServeProcess.stdout.on('data', (data) => {

@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "serve": "node node/serve",
-    "build": "node node/build",
-    "lint": "node node/lint",
+    "serve": "node config/serve",
+    "build": "node config/build",
+    "lint": "node config/lint",
     "lint:all": "vue-cli-service lint",
     "test:unit": "vue-cli-service test:unit"
   },

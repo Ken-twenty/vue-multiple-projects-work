@@ -1,16 +1,21 @@
 const path = require('path');
 const CurrentProject = process.env.PROJECT;
+const {
+  SinglePage,
+  MultiPages,
+} = require('./config/common');
+
+let pagesObj;
+if (CurrentProject.indexOf('///') !== -1) {
+  pagesObj = SinglePage(CurrentProject);
+} else {
+  pagesObj = MultiPages(CurrentProject);
+}
 
 module.exports = {
   outputDir: `dist/${CurrentProject}`,
 
-  pages: {
-    [CurrentProject]: {
-      entry: path.resolve(__dirname, `src/projects/${CurrentProject}/main.js`),
-      template: path.resolve(__dirname, `src/projects/${CurrentProject}/index.html`),
-      filename: 'index.html',
-    },
-  },
+  pages: pagesObj,
 
   /* eslint no-param-reassign: 'off' */
   configureWebpack(config) {

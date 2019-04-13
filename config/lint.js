@@ -1,5 +1,5 @@
 const {
-  projects,
+  Projects,
 } = require('./common');
 const inquirer = require('inquirer');
 const {
@@ -12,7 +12,7 @@ inquirer.prompt([
     type: 'list',
     name: 'project',
     message: 'Select a project to lint: ',
-    choices: projects,
+    choices: Projects,
   },
 ]).then((res) => {
 
