@@ -21,7 +21,7 @@ const ChildrenRoutes = Children.map((child) => {
     name: child,
     beforeEnter() {
 
-      window.location = `/${child}`;
+      window.location = `/${child}/#/`;
 
     },
   };
