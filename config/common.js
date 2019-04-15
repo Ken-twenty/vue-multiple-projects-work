@@ -1,37 +1,47 @@
 const fs = require('fs');
+const path = require('path');
 
 const Projects = fs.readdirSync('src/projects');
+const EntryProject = 'euht_uds';
 
-const SinglePage = (project) => {
+const GeneratePages = (projectStr) => {
 
-  return {
-    [project]: {
-      entry: path.resolve(__dirname, `../src/projects/${project}/main.js`),
-      template: path.resolve(__dirname, `../src/projects/${project}/index.html`),
-      filename: 'index.html',
-    },
+  if (!projectStr) {
+
+    return {};
+
+  }
+  if (projectStr.indexOf('///') === -1) {
+
+    return {
+      [projectStr]: {
+        entry: path.resolve(__dirname, `../src/projects/${projectStr}/main.js`),
+        template: path.resolve(__dirname, `../src/projects/${projectStr}/index.html`),
+        filename: 'index.html',
+      },
+    };
+
   }
 
-}
+  const pages = {};
 
-const MultiPages = (projects) => {
+  projectStr.split('///').forEach((project) => {
 
-  let pages = {};
-
-  projects.split('///').forEach((project) => {
     pages[project] = {
       entry: path.resolve(__dirname, `../src/projects/${project}/main.js`),
       template: path.resolve(__dirname, `../src/projects/${project}/index.html`),
-      filename: 'index.html',
-    }
+      filename: `${project === EntryProject ? 'index' : project}.html`,
+    };
+
   });
 
-  return pages
+  return pages;
+
 
 };
 
 module.exports = {
   Projects,
-  SinglePage,
-  MultiPages,
+  EntryProject,
+  GeneratePages,
 };

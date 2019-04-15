@@ -1,48 +1,62 @@
-const {
-  Projects,
-} = require('./common');
 const inquirer = require('inquirer');
+const chalk = require('chalk');
 const {
   exec,
 } = require('child_process');
-const chalk = require('chalk');
 
-inquirer.prompt([
-  {
-    type: 'list',
-    name: 'project',
-    message: 'Select a project to serve on development: ',
-    choices: Projects,
-  },
-]).then((res) => {
+const {
+  Projects,
+  EntryProject,
+} = require('./common');
 
-  let ServeProcess;
-  if (res.project === 'euht_uds') {
+const ServeInquirer = () => new Promise((resolve) => {
 
-    inquirer.prompt([
-      {
-        type: 'checkbox',
-        name: 'projects',
-        message: 'euht_uds is the entry page, select several children projects which you wanner wrap: ',
-        choices: Projects.slice(0, -1),
-      }
-    ]).then((res) => {
+  inquirer.prompt([
+    {
+      type: 'list',
+      name: 'project',
+      message: 'Select a project to serve on development: ',
+      choices: Projects,
+    },
+  ]).then((listRes) => {
 
-      // Windows 与 Linux 文件夹均不能包含 '/'，所以可以安全地作为分隔符使用
-      process.env.PROJECT = res.project.join('///');
-      ServeProcess = exec('vue-cli-service serve');
+    if (listRes.project === EntryProject) {
 
-    });
+      inquirer.prompt([
+        {
+          type: 'checkbox',
+          name: 'projects',
+          message: 'euht_uds is the entry page, select several children projects which you wanner wrap: ',
+          choices: Projects.slice(0, -1),
+        },
+      ]).then((checkboxRes) => {
 
-  } else {
+        // Windows 与 Linux 文件夹均不能包含 '/'，所以可以安全地作为分隔符使用
+        process.env.PROJECT = [
+          EntryProject,
+          ...checkboxRes.projects,
+        ].join('///');
+        const serveProcess = exec('vue-cli-service serve');
+        resolve(serveProcess);
 
-    process.env.PROJECT = res.project;
-    ServeProcess = exec('vue-cli-service serve');
+      });
 
-  }
+    } else {
+
+      process.env.PROJECT = listRes.project;
+      const serveProcess = exec('vue-cli-service serve');
+      resolve(serveProcess);
+
+    }
+
+  });
+
+});
+
+ServeInquirer().then((serveProcess) => {
 
   // 应用反馈
-  ServeProcess.stdout.on('data', (data) => {
+  serveProcess.stdout.on('data', (data) => {
 
     if (String(data).indexOf('error') !== -1) {
 
@@ -57,7 +71,7 @@ inquirer.prompt([
   });
 
   // 应用内错误处理
-  ServeProcess.stderr.on('data', (data) => {
+  serveProcess.stderr.on('data', (data) => {
 
     console.clear();
     console.log(data);
@@ -65,10 +79,15 @@ inquirer.prompt([
   });
 
   // 命令执行错误
-  ServeProcess.on('error', (err) => {
+  serveProcess.on('error', (err) => {
 
     console.log(err);
 
   });
 
-});
+})
+  .catch((errMsg) => {
+
+    console.log(chalk.red(`自定义打包程序出错: ${errMsg || 'unknown'}`));
+
+  });
