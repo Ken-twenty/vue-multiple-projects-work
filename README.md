@@ -1,34 +1,40 @@
 # multiple_projects_work
 
-## Project setup
+## 初始化
 ```
-npm install
-```
-
-### Compiles and hot-reloads for development
-```
-npm run serve
+yarn install
 ```
 
-### Compiles and minifies for production
+### 开发环境编译与热加载
 ```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
+yarn serve
 ```
 
-### Lints and fixes files
+### 生产环境编译与压缩
 ```
-npm run lint
-```
-
-### Run your unit tests
-```
-npm run test:unit
+yarn build
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### 单项目代码检查与修正
+```
+yarn lint
+```
+
+### 全局代码检查与修正
+```
+yarn lint:all
+```
+
+### 单元测试
+```
+yarn test:unit
+```
+
+### 自定义配置
+参考 [Configuration Reference](https://cli.vuejs.org/config/).
+
+## 版本
+
+### node: v8.x LTS
+
+### npm: v6.x stable
