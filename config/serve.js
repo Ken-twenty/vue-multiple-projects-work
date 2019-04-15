@@ -78,16 +78,23 @@ ServeInquirer().then((serveProcess) => {
 
   });
 
-  // 命令执行错误
+  // 进程执行错误
   serveProcess.on('error', (err) => {
 
-    console.log(err);
+    console.log(`error: ${err}`);
+
+  });
+
+  // 进程关闭
+  serveProcess.on('close', (close) => {
+
+    console.log(`close: ${close}`);
 
   });
 
 })
   .catch((errMsg) => {
 
-    console.log(chalk.red(`自定义打包程序出错: ${errMsg || 'unknown'}`));
+    console.log(chalk.red(`自定义 serve 出错: ${errMsg || 'unknown'}`));
 
   });
