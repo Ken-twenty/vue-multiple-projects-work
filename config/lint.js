@@ -1,11 +1,12 @@
-const {
-  Projects,
-} = require('./common');
 const inquirer = require('inquirer');
+const chalk = require('chalk');
 const {
   exec,
 } = require('child_process');
-const chalk = require('chalk');
+
+const {
+  Projects,
+} = require('./common');
 
 inquirer.prompt([
   {
