@@ -1,7 +1,8 @@
+const path = require('path');
 const inquirer = require('inquirer');
 const chalk = require('chalk');
 const {
-  exec,
+  spawn,
 } = require('child_process');
 
 const {
@@ -37,7 +38,7 @@ const BuildInquirer = () => new Promise((resolve) => {
           EntryProject,
           ...checkboxRes.projects,
         ].join('///');
-        const buildProcess = exec('vue-cli-service build');
+        const buildProcess = spawn('vue-cli-service.cmd', ['build'], { cwd: path.resolve(__dirname, '..') });
         resolve(buildProcess);
 
       });
@@ -45,7 +46,7 @@ const BuildInquirer = () => new Promise((resolve) => {
     } else {
 
       process.env.PROJECT = listRes.project;
-      const buildProcess = exec('vue-cli-service build');
+      const buildProcess = spawn('vue-cli-service.cmd', ['build'], { cwd: path.resolve(__dirname, '..') });
       resolve(buildProcess);
 
     }

@@ -46,7 +46,7 @@ const ServeInquirer = () => new Promise((resolve) => {
     } else {
 
       process.env.PROJECT = listRes.project;
-      const serveProcess = spawn('vue-cli-service serve');
+      const serveProcess = spawn('vue-cli-service.cmd', ['serve'], { cwd: path.resolve(__dirname, '..') });
       resolve(serveProcess);
 
     }
