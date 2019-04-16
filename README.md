@@ -67,3 +67,7 @@ yarn test:unit
 ## TODO
 
   1. `public` 文件夹独立
+
+  2. 整合打包时子项目独立文件夹
+
+  3. 未测试整合打包时的 vue-i18n
