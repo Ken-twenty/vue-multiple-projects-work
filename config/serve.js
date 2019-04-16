@@ -76,7 +76,7 @@ ServeInquirer().then((serveProcess) => {
   serveProcess.stderr.on('data', (data) => {
 
     console.clear();
-    console.log(data);
+    console.log(data.toString());
 
   });
 

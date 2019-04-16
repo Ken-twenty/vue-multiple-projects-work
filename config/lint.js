@@ -18,7 +18,7 @@ inquirer.prompt([
 ]).then((res) => {
 
   process.env.PROJECT = res.project;
-  const LintProcess = exec(`vue-cli-service lint --quiet '/src/${res.project}/'`);
+  const LintProcess = exec(`vue-cli-service lint src/projects/${res.project}/`);
 
   // 应用反馈
   LintProcess.stdout.on('data', (data) => {

@@ -76,7 +76,7 @@ BuildInquirer().then((buildProcess) => {
   buildProcess.stderr.on('data', (data) => {
 
     console.clear();
-    console.log(data);
+    console.log(data.toString());
 
   });
 
