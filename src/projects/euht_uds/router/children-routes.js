@@ -21,7 +21,8 @@ const ChildrenRoutes = Children.map((child) => {
     name: child,
     beforeEnter() {
 
-      window.location = `/${child}/#/`;
+      // TODO 后台可配置 UrlRewrite 省略后缀名
+      window.location = `/${child}.html/#/`;
 
     },
   };

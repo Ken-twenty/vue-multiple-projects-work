@@ -1,43 +1,95 @@
-const {
-  Projects,
-} = require('./common');
 const inquirer = require('inquirer');
+const chalk = require('chalk');
 const {
   exec,
 } = require('child_process');
-const chalk = require('chalk');
 
-inquirer.prompt([
-  {
-    type: 'list',
-    name: 'project',
-    message: 'Select a project to build: ',
-    choices: Projects,
-  },
-]).then((res) => {
+const {
+  Projects,
+  EntryProject,
+  ChildrenProjects,
+} = require('./common');
 
-  process.env.PROJECT = res.project;
-  const BuildProcess = exec('vue-cli-service build');
+const BuildInquirer = () => new Promise((resolve) => {
+
+  inquirer.prompt([
+    {
+      type: 'list',
+      name: 'project',
+      message: 'Select a project to build for production: ',
+      choices: Projects,
+    },
+  ]).then((listRes) => {
+
+    if (listRes.project === EntryProject) {
+
+      inquirer.prompt([
+        {
+          type: 'checkbox',
+          name: 'projects',
+          message: 'euht_uds is the entry page, select several children projects which you wanner wrap: ',
+          choices: ChildrenProjects,
+        },
+      ]).then((checkboxRes) => {
+
+        // Windows 与 Linux 文件夹均不能包含 '/'，所以可以安全地作为分隔符使用
+        process.env.PROJECT = [
+          EntryProject,
+          ...checkboxRes.projects,
+        ].join('///');
+        const buildProcess = exec('vue-cli-service build');
+        resolve(buildProcess);
+
+      });
+
+    } else {
+
+      process.env.PROJECT = listRes.project;
+      const buildProcess = exec('vue-cli-service build');
+      resolve(buildProcess);
+
+    }
+
+  });
+
+});
+
+BuildInquirer().then((buildProcess) => {
 
   // 应用反馈
-  BuildProcess.stdout.on('data', (data) => {
+  buildProcess.stdout.on('data', (data) => {
 
-    console.log(chalk.green(data));
+    if (String(data).indexOf('error') !== -1) {
+
+      console.log(chalk.red(data));
+
+    } else {
+
+      console.log(chalk.green(data));
+
+    }
 
   });
 
   // 应用内错误处理
-  BuildProcess.stderr.on('data', (data) => {
+  buildProcess.stderr.on('data', (data) => {
 
     console.clear();
     console.log(data);
 
   });
 
-  // 命令执行错误
-  BuildProcess.on('error', (err) => {
+  // 进程执行错误
+  buildProcess.on('error', (err) => {
 
-    console.log(err);
+    console.log(`error: ${err}`);
+
+  });
+
+  // 进程关闭
+  buildProcess.on('close', (close) => {
+
+    console.log(`close: ${close}`);
 
   });
 

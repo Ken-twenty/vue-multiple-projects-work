@@ -4,13 +4,17 @@ const path = require('path');
 const Projects = fs.readdirSync('src/projects');
 const EntryProject = 'euht_uds';
 
-const GeneratePages = (projectStr) => {
+const GetChildrenProjects = (projects) => {
 
-  if (!projectStr) {
+  const tempProjects = [...projects];
+  tempProjects.slice(tempProjects.findIndex((item) => item === EntryProject), 1);
 
-    return {};
+  return tempProjects;
 
-  }
+};
+
+const GeneratePages = (projectStr = 'temp') => {
+
   if (projectStr.indexOf('///') === -1) {
 
     return {
@@ -40,8 +44,12 @@ const GeneratePages = (projectStr) => {
 
 };
 
+const GenerateContext = (projectStr = 'temp') => (projectStr.indexOf('///') === -1 ? projectStr : EntryProject);
+
 module.exports = {
   Projects,
   EntryProject,
+  ChildrenProjects: GetChildrenProjects(Projects),
   GeneratePages,
+  GenerateContext,
 };

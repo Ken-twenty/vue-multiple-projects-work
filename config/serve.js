@@ -7,6 +7,7 @@ const {
 const {
   Projects,
   EntryProject,
+  ChildrenProjects,
 } = require('./common');
 
 const ServeInquirer = () => new Promise((resolve) => {
@@ -27,7 +28,7 @@ const ServeInquirer = () => new Promise((resolve) => {
           type: 'checkbox',
           name: 'projects',
           message: 'euht_uds is the entry page, select several children projects which you wanner wrap: ',
-          choices: Projects.slice(0, -1),
+          choices: ChildrenProjects,
         },
       ]).then((checkboxRes) => {
 

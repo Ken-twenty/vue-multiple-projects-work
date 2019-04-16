@@ -2,13 +2,16 @@ const path = require('path');
 
 const {
   GeneratePages,
+  GenerateContext,
 } = require('./config/common');
-const CurrentProject = process.env.PROJECT || null;
+
+const context = GenerateContext(process.env.PROJECT);
 
 module.exports = {
-  outputDir: `dist/${CurrentProject}`,
 
-  pages: GeneratePages(CurrentProject),
+  outputDir: `dist/${context}`,
+
+  pages: GeneratePages(process.env.PROJECT),
 
   /* eslint no-param-reassign: 'off' */
   configureWebpack(config) {
@@ -25,9 +28,10 @@ module.exports = {
     i18n: {
       locale: 'zh_CN',
       fallbackLocale: 'en_US',
-      localeDir: `src/projects/${CurrentProject}/locales`,
+      localeDir: `src/projects/${context}/locales`,
       enableInSFC: false,
     },
 
   },
+
 };
