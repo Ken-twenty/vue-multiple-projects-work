@@ -7,7 +7,7 @@
 
 <script>
 const logoSrc = require('@images/logo.png');
-import HelloWorld from '../components/HelloWorld.vue';
+import HelloWorld from '../components/hello-world/HelloWorld.vue';
 
 export default {
   name: 'home',

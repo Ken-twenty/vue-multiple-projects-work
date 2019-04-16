@@ -23,6 +23,8 @@ const messages = {
 
 // Create VueI18n instance with options
 export default new VueI18n({
+
+  // TODO
   locale: 'zh_CN',
   messages,
 });

@@ -50,6 +50,8 @@ yarn test:unit
 
   3. `pre-commit` 监听的是暂存区的文件（已 `add`，未 `commit`），命令行与可视化操作皆可触发 `lint`
 
+  4. Vuex 根据各子项目需要决定是否模块化，子项目间通讯使用 `LocalForage`
+
 ## 命名规则
 
   1. 项目名：`aa_bb_cc`
@@ -71,3 +73,5 @@ yarn test:unit
   2. 整合打包时子项目独立文件夹
 
   3. 未测试整合打包时的 vue-i18n
+
+  4. 单元测试
