@@ -7,7 +7,7 @@ const EntryProject = 'euht_uds';
 const GetChildrenProjects = (projects) => {
 
   const tempProjects = [...projects];
-  tempProjects.slice(tempProjects.findIndex((item) => item === EntryProject), 1);
+  tempProjects.splice(tempProjects.findIndex((item) => item === EntryProject), 1);
 
   return tempProjects;
 
